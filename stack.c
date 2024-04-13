@@ -8,7 +8,7 @@ stack_init(int stack_size){
     stack *s;
 
     if (stack_size <= 0){
-	printf("Detect invalid stack size = %d\n",
+	printf("detect invalid stack size = %d\n",
 	       stack_size);
 	exit(-1);
     }
@@ -20,7 +20,7 @@ stack_init(int stack_size){
     }
 
     s->stack_pointer = 0;
-    s->max_size = 0;
+    s->max_size = stack_size;
 
     s->main_data = (void **) malloc(sizeof(void *) * stack_size);
     if (s->main_data == NULL){
@@ -32,19 +32,46 @@ stack_init(int stack_size){
 }
 
 bool
-stack_is_full(void){
-    return true;
+stack_is_empty(stack *s){
+    return s->stack_pointer == 0;
+}
+
+bool
+stack_is_full(stack *s){
+    return s->stack_pointer >= s->max_size;
 }
 
 void
-stack_push(void *p){}
+stack_push(stack *s, void *p){
+    if (stack_is_full(s)){
+	printf("stack is full. failed to push\n");
+	return;
+    }
 
-void *
-stack_pop(void){
-    return NULL;
+    s->main_data[s->stack_pointer++] = p;
 }
 
 void *
-stack_top(void){
-    return NULL;
+stack_pop(stack *s){
+    void *p;
+
+    if (stack_is_empty(s)){
+	printf("stack is empty. failed to pop\n");
+	return NULL;
+    }
+
+    p = s->main_data[s->stack_pointer - 1];
+    s->stack_pointer--;
+
+    return p;
+}
+
+void *
+stack_top(stack *s){
+    if (stack_is_empty(s)){
+	printf("Stack is empty. failed to return the reference\n");
+	return NULL;
+    }
+
+    return s->main_data[s->stack_pointer - 1];
 }

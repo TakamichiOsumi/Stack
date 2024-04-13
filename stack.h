@@ -10,10 +10,10 @@ typedef struct stack {
 } stack;
 
 stack *stack_init(int stack_size);
-bool stack_is_empty(void);
-bool stack_is_full(void);
-void stack_push(void *p);
-void *stack_pop(void);
-void *stack_top(void);
+bool stack_is_empty(stack *s);
+bool stack_is_full(stack *s);
+void stack_push(stack *s, void *p);
+void *stack_pop(stack *s);
+void *stack_top(stack *s);
 
 #endif
