@@ -20,6 +20,8 @@ test_basic_operations(void){
     stack *s;
 
     s = stack_init(5);
+
+    assert(stack_is_empty(s));
     stack_push(s, (void *) 1);
     stack_push(s, (void *) 2);
     stack_push(s, (void *) 3);
@@ -28,8 +30,8 @@ test_basic_operations(void){
     stack_push(s, (void *) 6);
     stack_push(s, (void *) 7);
     assert(stack_top(s) == (void *) 5);
-
     assert(stack_is_full(s));
+
     test_dump_stack(s);
 
     assert(stack_pop(s) == (void *) 5);
@@ -37,8 +39,10 @@ test_basic_operations(void){
     assert(stack_pop(s) == (void *) 4);
     assert(stack_pop(s) == (void *) 3);
     assert(stack_pop(s) == (void *) 2);
+    assert(stack_top(s) == (void *) 1); /* top() */
     assert(stack_pop(s) == (void *) 1);
     assert(stack_pop(s) == NULL);
+    assert(stack_is_empty(s));
 
     test_dump_stack(s);
 
