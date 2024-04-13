@@ -27,14 +27,13 @@ test_basic_operations(void){
     stack_push(s, (void *) 5);
     stack_push(s, (void *) 6);
     stack_push(s, (void *) 7);
-
-    assert(stack_is_full(s));
     assert(stack_top(s) == (void *) 5);
 
+    assert(stack_is_full(s));
     test_dump_stack(s);
 
     assert(stack_pop(s) == (void *) 5);
-    assert(stack_top(s) == (void *) 4);
+    assert(stack_top(s) == (void *) 4); /* top() */
     assert(stack_pop(s) == (void *) 4);
     assert(stack_pop(s) == (void *) 3);
     assert(stack_pop(s) == (void *) 2);
