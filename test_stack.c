@@ -15,11 +15,17 @@ test_dump_stack(stack *s){
     printf("-----\n");
 }
 
+/* The test data won't allocate any data. */
+static void
+test_free_cb(void *p){}
+
 static void
 test_basic_operations(void){
     stack *s;
 
     s = stack_init(5);
+
+    stack_set_callbacks(s, test_free_cb);
 
     assert(stack_is_empty(s));
     stack_push(s, (void *) 1);
@@ -29,7 +35,7 @@ test_basic_operations(void){
     stack_push(s, (void *) 5);
     stack_push(s, (void *) 6);
     stack_push(s, (void *) 7);
-    assert(stack_top(s) == (void *) 5);
+    assert(stack_top(s) == (void *) 5); /* top() */
     assert(stack_is_full(s));
 
     test_dump_stack(s);
@@ -46,13 +52,15 @@ test_basic_operations(void){
 
     test_dump_stack(s);
 
-    printf("All tests are done gracefully.\n");
+    stack_destroy(s);
 }
 
 int
 main(int argc, char **argv){
 
     test_basic_operations();
+
+    printf("All tests are done gracefully.\n");
 
     return 0;
 }

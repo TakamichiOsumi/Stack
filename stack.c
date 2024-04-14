@@ -28,7 +28,14 @@ stack_init(int stack_size){
 	exit(-1);
     }
 
+    s->free = NULL;
+
     return s;
+}
+
+void
+stack_set_callbacks(stack *s, free_cb free){
+    s->free = free;
 }
 
 bool
@@ -69,9 +76,31 @@ stack_pop(stack *s){
 void *
 stack_top(stack *s){
     if (stack_is_empty(s)){
-	printf("Stack is empty. failed to return the reference\n");
+	printf("stack is empty. failed to return the reference\n");
 	return NULL;
     }
 
     return s->main_data[s->stack_pointer - 1];
+}
+
+void
+stack_destroy(stack *s){
+    int i;
+
+    if (s == NULL)
+	return;
+
+    if (!s->free){
+	printf("internal free callback is missing\n");
+	return;
+    }
+
+    for (i = 0; i < s->stack_pointer; i++){
+	s->free(s->main_data[i]);
+    }
+
+    s->stack_pointer = 0;
+    s->max_size = 0;
+    s->main_data = NULL;
+    free(s);
 }
