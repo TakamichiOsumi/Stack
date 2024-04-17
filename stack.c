@@ -101,6 +101,7 @@ stack_destroy(stack *s){
 
     s->stack_pointer = 0;
     s->max_size = 0;
+    free(s->main_data);
     s->main_data = NULL;
     free(s);
 }

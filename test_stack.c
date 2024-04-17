@@ -28,6 +28,7 @@ test_basic_operations(void){
     stack_set_callbacks(s, test_free_cb);
 
     assert(stack_is_empty(s));
+    assert(stack_top(s) == NULL); /* top() */
     stack_push(s, (void *) 1);
     stack_push(s, (void *) 2);
     stack_push(s, (void *) 3);
