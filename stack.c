@@ -83,6 +83,10 @@ stack_top(stack *s){
     return s->main_data[s->stack_pointer - 1];
 }
 
+/*
+ * To free the application specific data, user
+ * needs to set 'free' callback.
+ */
 void
 stack_destroy(stack *s){
     int i;
@@ -90,13 +94,10 @@ stack_destroy(stack *s){
     if (s == NULL)
 	return;
 
-    if (!s->free){
-	printf("internal free callback is missing\n");
-	return;
-    }
-
     for (i = 0; i < s->stack_pointer; i++){
-	s->free(s->main_data[i]);
+	if (s->free){
+	    s->free(s->main_data[i]);
+	}
     }
 
     s->stack_pointer = 0;
