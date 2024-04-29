@@ -1,5 +1,5 @@
 CC	= gcc
-CFLAGS	= -Wall -O0
+CFLAGS	= -Wall -O0 -g
 TEST	= exec_stack_test
 LIBRARY	= libstack.a
 
