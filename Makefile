@@ -17,7 +17,7 @@ $(LIBRARY): stack.o
 .phony: test clean
 
 test: $(TEST)
-	@./$(TEST) > /dev/null && echo "Success if the value is zero >>> $$?"
+	@./$(TEST) > /dev/null && echo "Success when the value is zero >>> $$?"
 
 clean:
-	rm -rf *.o $(TEST) $(LIBRARY)
+	@rm -rf *.o $(TEST) $(TEST).dSYM $(LIBRARY)
